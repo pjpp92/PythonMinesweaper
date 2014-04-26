@@ -1,4 +1,4 @@
-PythonMinesweapre
+PythonMinesweaper
 =================
 
-Minesweapre
+Minesweaper
