@@ -18,13 +18,8 @@ class Board(object):
         return bomb_tab
 
     def full_board(self, bombs):
-        board_tab = []
-        for item in range(self.height):
-            for item1 in range(self.width):
-                new_point = Point(item, item1, [item, item1] in bombs , False)
-                board_tab.append(new_point)
-        return board_tab
-
+        full = [[Point(col, row, [col, row] in bombs, False) for col in range(self.height)] for row in range(self.width)]
+        return full
 
 
 class Point(Board):
@@ -53,8 +48,12 @@ class Point(Board):
 
 board = Board(10,10,10)
 bombs = board.bomb_place()
-for item in board.full_board(bombs):
-    print item.x, item.y, item.point_status, item.point_view, item.number
+full_board = board.full_board(bombs)
+for item in range(board.height):
+    for item1 in range(board.width):
+        print full_board[item][item1].x, full_board[item][item1].y, full_board[item][item1].point_status, full_board[item][item1].point_view, full_board[item][item1].number
+
+
 
 
 print ("bombs", bombs)
