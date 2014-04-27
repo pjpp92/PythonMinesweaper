@@ -1,4 +1,5 @@
 from random import randint
+import Tkinter
 
 class Board(object):
     def __init__(self, height, width, bomb_count):
@@ -51,10 +52,25 @@ bombs = board.bomb_place()
 full_board = board.full_board(bombs)
 for item in range(board.height):
     for item1 in range(board.width):
-        print full_board[item][item1].x, full_board[item][item1].y, full_board[item][item1].point_status, full_board[item][item1].point_view, full_board[item][item1].number
-
-
+        print full_board[item][item1].x, full_board[item][item1].y,\
+            full_board[item][item1].point_status, full_board[item][item1].point_view,\
+            full_board[item][item1].number
 
 
 print ("bombs", bombs)
 new_point = Point(0,0,True,True)
+
+class Gui:
+    def __init__(self, mGui):
+        mGui.title("Minesweaper")
+        mGui.geometry("500x500")
+        self.label = Tkinter.Label(mGui, text="abc").pack()
+        self.button = Tkinter.Button(mGui, text="destroy", command=self.x)
+        self.button.pack()
+    def x(self):
+        self.button.destroy()
+
+mGui = Tkinter.Tk()
+Gui(mGui)
+
+mGui.mainloop()
