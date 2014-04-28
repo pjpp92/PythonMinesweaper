@@ -50,8 +50,8 @@ class Point(Board):
 board = Board(10,10,10)
 bombs = board.bomb_place()
 full_board = board.full_board(bombs)
-for item in range(board.height):
-    for item1 in range(board.width):
+for item in range(len(full_board)):
+    for item1 in range(len(full_board[item])):
         print full_board[item][item1].x, full_board[item][item1].y,\
             full_board[item][item1].point_status, full_board[item][item1].point_view,\
             full_board[item][item1].number
@@ -61,16 +61,27 @@ print ("bombs", bombs)
 new_point = Point(0,0,True,True)
 
 class Gui:
+    point_tab = []
     def __init__(self, mGui):
         mGui.title("Minesweaper")
         mGui.geometry("500x500")
-        self.label = Tkinter.Label(mGui, text="abc").pack()
-        self.button = Tkinter.Button(mGui, text="destroy", command=self.x)
+        self.label = Tkinter.Label(mGui, text="abc")
+        self.label.pack()
+        self.button = Tkinter.Button(mGui, text="destroy", command=self.y)
         self.button.pack()
+
     def x(self):
         self.button.destroy()
 
-mGui = Tkinter.Tk()
-Gui(mGui)
+    def y(self):
+        for item in range(len(full_board)):
+            for item1 in range(len(full_board[item])):
+                help = Tkinter.Label(mGui, text="X")
+                help.pack()
+                help.place(x=15*item, y=15*item1)
 
+
+mGui = Tkinter.Tk()
+
+Gui(mGui)
 mGui.mainloop()
