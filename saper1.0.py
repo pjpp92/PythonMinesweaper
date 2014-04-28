@@ -11,8 +11,8 @@ class Board(object):
         help = 0
         bomb_tab = []
         while help < self.bomb_count:
-            bomb = randint(0, (self.height))
-            bomb1 = randint(0, (self.width))
+            bomb = randint(0, (self.height)-1)
+            bomb1 = randint(0, (self.width)-1)
             if [bomb, bomb1] not in bomb_tab:
                 bomb_tab.append([bomb, bomb1])
                 help += 1
@@ -41,19 +41,19 @@ class Point(Board):
 
     def calc_number(self, bombs):
         number = 0
-        for item in range(-1,1):
-            for item1 in range(-1,1):
-                if [self.x + item, self.y + item1] in bombs:
+        for item in range(3):
+            for item1 in range(3):
+                if [self.x + item -1, self.y + item1 -1] in bombs:
                     number += 1
         return number
 
-board = Board(10,10,10)
+board = Board(9,10,10)
 bombs = board.bomb_place()
 full_board = board.full_board(bombs)
 for item in range(len(full_board)):
     for item1 in range(len(full_board[item])):
         print full_board[item][item1].x, full_board[item][item1].y,\
-            full_board[item][item1].point_status, full_board[item][item1].point_view,\
+            full_board[item][item1].point_status, full_board[item1][item1].point_view,\
             full_board[item][item1].number
 
 
@@ -64,9 +64,7 @@ class Gui:
     point_tab = []
     def __init__(self, mGui):
         mGui.title("Minesweaper")
-        mGui.geometry("500x500")
-        self.label = Tkinter.Label(mGui, text="abc")
-        self.label.pack()
+        mGui.geometry("2000x2000")
         self.button = Tkinter.Button(mGui, text="destroy", command=self.y)
         self.button.pack()
 
@@ -76,10 +74,15 @@ class Gui:
     def y(self):
         for item in range(len(full_board)):
             for item1 in range(len(full_board[item])):
-                help = Tkinter.Label(mGui, text="X")
-                help.pack()
-                help.place(x=15*item, y=15*item1)
-
+                if full_board[item][item1].point_status:
+                    help = Tkinter.Label(mGui, text="X")
+                    help.pack()
+                    help.place(x=15*item, y=15*item1)
+                else:
+                    txt = str(full_board[item][item1].number)
+                    help = Tkinter.Label(mGui, text= txt)
+                    help.pack()
+                    help.place(x=15*item, y=15*item1)
 
 mGui = Tkinter.Tk()
 
